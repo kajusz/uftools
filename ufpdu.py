@@ -57,11 +57,11 @@ def simple():
                     invstatus = pdus[i].invert(rangeStatus)
                     return '<li>%s, <a href="/pdu%d/set/range/%d/%d/%s">power %s</a></li>' % (label, i, start, end, invstatus, invstatus)
 
-            buf += printRangeHtml('audio-processing', 1, 3)
-            buf += printRangeHtml('amplifiers', 4, 8)
+            buf += printRangeHtml('audio-processing', 2, 4)
+            buf += printRangeHtml('amplifiers', 5, 9)
 
         elif name == 'MainRack1':
-            listOfThings = [0, 9] # 1=Proj, 10=Monitor
+            listOfThings = [1, 10] # 1=Proj, 10=Monitor
             for outlet in listOfThings:
                 label, status = pdus[i].getLS(outlet)
                 invstatus = pdus[i].invert(status)
