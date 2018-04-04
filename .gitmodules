@@ -1,0 +1,3 @@
+[submodule "pdu"]
+	path = pdu
+	url = https://github.com/kajusz/pdu.git
