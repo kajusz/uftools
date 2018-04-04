@@ -1,0 +1,13 @@
+[Unit]
+Description=UnionFilms Web Control Applet
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/php /var/www/control/projection/worker.php
+User=www-data
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target

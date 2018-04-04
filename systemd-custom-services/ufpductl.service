@@ -1,0 +1,12 @@
+[Unit]
+Description=UnionFilms Power Distribution Control Applet
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/uftools/ufpdu.py
+User=projectionist
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
