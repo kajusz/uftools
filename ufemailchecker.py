@@ -2,11 +2,11 @@
 
 import logging
 log = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 import argparse
 
-# Email parser dependency
+# Email parser dependencies
 import sys
 import imaplib
 import email
