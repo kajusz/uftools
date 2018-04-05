@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
 ##########
 # Setup mailbox object
-    mailbox = imaplib.IMAP4_SSL(emailConfig['server'], port=emailConfig['port'])
+    mailbox = imaplib.IMAP4_SSL(emailConfig['host'], port=emailConfig['port'])
     try:
         rv, data = mailbox.login_cram_md5(emailConfig['username'], emailConfig['password'])
         log.debug('action = "login", result = "%s", data = "%s"', rv, data)
