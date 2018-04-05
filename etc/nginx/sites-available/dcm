@@ -1,0 +1,20 @@
+map $http_upgrade $connection_upgrade {
+	default upgrade;
+	'' close;
+}
+
+upstream websocket {
+	server 192.168.241.10:9090;
+}
+
+server {
+	listen 8080 default_server;
+	listen [::]:8080 default_server;
+
+	location / {
+		proxy_pass http://192.168.241.10:9090;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection $connection_upgrade;
+	}
+}
