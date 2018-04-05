@@ -7,7 +7,7 @@ import email
 import re
 import os
 
-# returns a tuple with the link, and trailer title
+# returns a tuple with the link, and trailer title OR a none tuple
 def findTrailerLink(message):
     msg = email.message_from_bytes(message)
 
@@ -31,11 +31,11 @@ def findTrailerLink(message):
 
         # We should not be in this function any more if we have successfully found the link
         log.error('Failed to find a link in message "%s".', subject)
-        return False
+        return (None, None)
     else:
         # All messages from MPS appear to be multipart plain + html and html is easier to dodgily parse
         log.critical('WOW, a non multipart mesasge, someone needs to fix this!!!')
-        return False
+        return (None, None)
 
 # returns array of downloaded files
 def findAndDownloadKeys(message, downloadDir='/tmp/'):
@@ -60,6 +60,7 @@ def findAndDownloadKeys(message, downloadDir='/tmp/'):
             ret.append(dlPath)
             fp.write(part.get_payload(decode=True))
             fp.close()
+            log.debug('Downloaded "%s"', filename)
         else:
             raise IOError('File %s exists' % (dlPath))
 

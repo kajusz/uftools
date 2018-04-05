@@ -9,7 +9,7 @@ import uuid
 import json
 
 # Returns true is added successfully
-def addDownload(link)
+def addDownload(link):
     r = requests.get(link) # get the page from the link
     assert(r.status_code == 200)
 
@@ -21,9 +21,9 @@ def addDownload(link)
     jsonData = {"transfer_specs":[{"transfer_spec":json.loads(jData.group(1)),"aspera_connect_settings":{"allow_dialogs":"no","app_id":"localhost","request_id":str(uuid.uuid4()),"back_link":link}}],"aspera_connect_settings":{"app_id":"localhost"}}
 
     r = requests.post("https://local.connectme.us:43003/v5/connect/transfers/start", headers=headers, json=jsonData)
-    assert(r.status_code == 200)
+
     if not (r.status_code == requests.codes.ok):
-        print(r.status_code, r.reason)
+        log.error('Failed to add aspera link, status = %s, reason = %s', r.status_code, r.reason)
         return False
     else:
         return True
