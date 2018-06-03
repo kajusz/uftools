@@ -84,8 +84,11 @@ def mainPage():
     #buf = '<DOCTYPE html><html><head><title>Advanced Power Distribution Management</title><style type="text/css"> span.on, span.off {font-weight:bold;} .on {color:green;} .off {color:red;}</style></head><body><h1>Advanced Power Distribution Management</h1><p>Lets turn things on and off!</p><ul>'
 ### END UF MODS
     for i in range(0, len(pdus)):
-        ncvp  = pdus[i].getNCVP()
-        buf2 = '<div><p>name = %s | current = %.1fA | voltage = %dV | power = %.1fW | <a href="/pdu%d/set/all/on">all <span class="on">on</span></a> | <a href="/pdu%d/set/all/off">all <span class="off">off</span></a></p><ol>' % (*ncvp, i, i)
+        ncvp  = pdus[i].getNSCVP()
+        if not ncvp:
+            continue
+
+        buf2 = '<div><p>name = %s | status = %s | current = %.1fA | voltage = %dV | power = %.1fW | <a href="/pdu%d/set/all/on" class="confirmation">all <span class="on">on</span></a> | <a href="/pdu%d/set/all/off" class="confirmation">all <span class="off">off</span></a></p><ol>' % (*ncvp, i, i)
 
         olsc = pdus[i].getOLSC()
         for outlet, label, status, current in olsc:
@@ -97,7 +100,7 @@ def mainPage():
 
         buf += buf2 + '</ol></div>'
 
-    buf += '</ul></body></html>'
+    buf += '</ul><script type="text/javascript">var elems = document.getElementsByClassName("confirmation"); var confirmIt = function (e) { if (!confirm("Are you sure?")) e.preventDefault(); }; for (var i = 0, l = elems.length; i < l; i++) { elems[i].addEventListener("click", confirmIt, false); }</script></body></html>'
     return buf
 
 @app.route('/pdu<int:pduId>/save')
